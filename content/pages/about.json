@@ -4,23 +4,23 @@
   "navOrder": 2,
   "blocks": [
     {
-      "_template": "hero",
       "kicker": "About this template",
       "heading": "Folded, not printed",
       "accentWord": "Folded",
-      "tagline": "The design belongs to the developer. The words belong to you."
+      "tagline": "The design belongs to the developer. The words belong to you.",
+      "_template": "hero"
     },
     {
-      "_template": "split",
       "heading": "Images sit beside your words",
-      "imageLeft": true,
+      "body": "Upload a photo in the editor and it appears here, framed in paper. Until you add one, a crease pattern holds its place — so the layout never looks broken while you're still writing.\n\nFlip the switch in the editor to move the image to the other side.\n",
       "imageAlt": "",
-      "body": "Upload a photo in the editor and it appears here, framed in paper. Until you add one, a crease pattern holds its place — so the layout never looks broken while you're still writing.\n\nFlip the switch in the editor to move the image to the other side.\n"
+      "imageLeft": false,
+      "_template": "split"
     },
     {
-      "_template": "prose",
       "heading": "Writing works the way you expect",
-      "body": "The text editor supports the usual things:\n\n- **Bold** and *italic* text\n- Bulleted and numbered lists\n- Links, like this one to the [home page](/)\n"
+      "body": "The text editor supports the usual things:\n\n* **Bold** and *italic* text\n* Bulleted and numbered lists\n* Links, like this one to the [home page](/)\n",
+      "_template": "prose"
     }
   ]
 }
