@@ -12,12 +12,14 @@ tina/config.js      <- schema: what editors CAN edit (fields, blocks)
 src/                <- the design; editors can't reach this
   components/FoldRouter.jsx   pleated page-transition system
   components/Unfold.jsx       scroll-in paper reveal
-  components/RichText.jsx     renders Tina's rich-text AST (no tinacms in bundle)
+  components/RichText.jsx     renders Tina's rich-text AST
   blocks/                     hero / prose / cards / split section components
 .github/workflows/deploy.yml  builds admin + site, deploys to Pages
 ```
 
-Content is glob-imported at build time (`src/lib/content.js`), so every editor save → Git commit → Actions rebuild → live site. No API keys ship in the bundle.
+Content is glob-imported at build time (`src/lib/content.js`), so every editor save → Git commit → rebuild → live site. No API keys ship in the bundle.
+
+Editing is **visual (WYSIWYG)**: opening a page in the admin shows the real site in a live preview — click any text on the page to focus its field and watch edits render in the actual design as you type (`useTina` in `src/App.jsx`, `tinaField` tags in `src/blocks/index.jsx`). For public visitors the site is still fully static: the only tinacms code in the bundle is the ~5 KB hook, and it makes no network calls outside the admin.
 
 ## Local development
 

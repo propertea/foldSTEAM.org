@@ -1,8 +1,16 @@
+import { tinaField } from "tinacms/dist/react";
 import Unfold from "../components/Unfold.jsx";
 import RichText from "../components/RichText.jsx";
 import CreasePattern from "../components/CreasePattern.jsx";
 import { FoldLink } from "../components/FoldRouter.jsx";
 import { assetUrl } from "../lib/content.js";
+
+/*
+ * data-tina-field={tinaField(obj, "field")} makes the element a click
+ * target in Tina's visual editor: clicking it focuses that exact field
+ * in the sidebar. On the public site (no editing metadata) it renders
+ * an empty attribute and does nothing.
+ */
 
 /* ------------------------------- Hero -------------------------------- */
 
@@ -23,20 +31,32 @@ function Hero({ block }) {
   }
 
   return (
-    <header className="hero">
+    <header className="hero" data-tina-field={tinaField(block)}>
       <CreasePattern className="hero-crease" />
       <div className="container">
         {kicker && (
           <Unfold>
-            <p className="kicker">{kicker}</p>
+            <p className="kicker" data-tina-field={tinaField(block, "kicker")}>
+              {kicker}
+            </p>
           </Unfold>
         )}
         <Unfold delay={90}>
-          <h1 className="hero-heading">{headingEl}</h1>
+          <h1
+            className="hero-heading"
+            data-tina-field={tinaField(block, "heading")}
+          >
+            {headingEl}
+          </h1>
         </Unfold>
         {tagline && (
           <Unfold delay={200}>
-            <p className="hero-tagline">{tagline}</p>
+            <p
+              className="hero-tagline"
+              data-tina-field={tinaField(block, "tagline")}
+            >
+              {tagline}
+            </p>
           </Unfold>
         )}
       </div>
@@ -48,10 +68,23 @@ function Hero({ block }) {
 
 function Prose({ block }) {
   return (
-    <section className="section container narrow">
+    <section
+      className="section container narrow"
+      data-tina-field={tinaField(block)}
+    >
       <Unfold>
-        {block.heading && <h2 className="section-heading">{block.heading}</h2>}
-        <RichText content={block.body} />
+        {block.heading && (
+          <h2
+            className="section-heading"
+            data-tina-field={tinaField(block, "heading")}
+          >
+            {block.heading}
+          </h2>
+        )}
+        <RichText
+          content={block.body}
+          data-tina-field={tinaField(block, "body")}
+        />
       </Unfold>
     </section>
   );
@@ -75,18 +108,23 @@ function CardLink({ item }) {
 
 function Cards({ block }) {
   return (
-    <section className="section container">
+    <section className="section container" data-tina-field={tinaField(block)}>
       {block.heading && (
         <Unfold>
-          <h2 className="section-heading">{block.heading}</h2>
+          <h2
+            className="section-heading"
+            data-tina-field={tinaField(block, "heading")}
+          >
+            {block.heading}
+          </h2>
         </Unfold>
       )}
       <div className="card-grid">
         {(block.items || []).map((item, i) => (
           <Unfold key={i} delay={i * 70} className="card-cell">
-            <article className="card">
-              <h3>{item.title}</h3>
-              <p>{item.text}</p>
+            <article className="card" data-tina-field={tinaField(item)}>
+              <h3 data-tina-field={tinaField(item, "title")}>{item.title}</h3>
+              <p data-tina-field={tinaField(item, "text")}>{item.text}</p>
               <CardLink item={item} />
             </article>
           </Unfold>
@@ -100,7 +138,7 @@ function Cards({ block }) {
 
 function Split({ block }) {
   return (
-    <section className="section container">
+    <section className="section container" data-tina-field={tinaField(block)}>
       <div className={`split ${block.imageLeft ? "image-left" : ""}`}>
         <Unfold className="split-media">
           {block.image ? (
@@ -108,16 +146,30 @@ function Split({ block }) {
               src={assetUrl(block.image)}
               alt={block.imageAlt || ""}
               loading="lazy"
+              data-tina-field={tinaField(block, "image")}
             />
           ) : (
-            <div className="split-placeholder">
+            <div
+              className="split-placeholder"
+              data-tina-field={tinaField(block, "image")}
+            >
               <CreasePattern />
             </div>
           )}
         </Unfold>
         <Unfold delay={110} className="split-body">
-          {block.heading && <h2 className="section-heading">{block.heading}</h2>}
-          <RichText content={block.body} />
+          {block.heading && (
+            <h2
+              className="section-heading"
+              data-tina-field={tinaField(block, "heading")}
+            >
+              {block.heading}
+            </h2>
+          )}
+          <RichText
+            content={block.body}
+            data-tina-field={tinaField(block, "body")}
+          />
         </Unfold>
       </div>
     </section>
@@ -127,6 +179,15 @@ function Split({ block }) {
 /* ----------------------------- Renderer ------------------------------ */
 
 const registry = { hero: Hero, prose: Prose, cards: Cards, split: Split };
+
+// Build-time content identifies blocks by _template; live data from the
+// visual editor identifies them by GraphQL __typename.
+const TEMPLATE_OF = {
+  PageBlocksHero: "hero",
+  PageBlocksProse: "prose",
+  PageBlocksCards: "cards",
+  PageBlocksSplit: "split",
+};
 
 export default function Blocks({ blocks }) {
   if (!blocks?.length) {
@@ -140,7 +201,8 @@ export default function Blocks({ blocks }) {
     );
   }
   return blocks.map((block, i) => {
-    const Component = registry[block._template];
+    const Component =
+      registry[block._template || TEMPLATE_OF[block.__typename]];
     return Component ? <Component key={i} block={block} /> : null;
   });
 }

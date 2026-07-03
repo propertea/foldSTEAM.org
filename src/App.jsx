@@ -1,8 +1,58 @@
 import { useEffect } from "react";
 import { Routes, Route, useParams } from "react-router-dom";
+import { useTina } from "tinacms/dist/react";
 import { FoldProvider, FoldLink } from "./components/FoldRouter.jsx";
 import Blocks from "./blocks/index.jsx";
 import { site, navPages, getPage } from "./lib/content.js";
+
+/*
+ * Visual editing: inside the Tina admin preview, useTina registers this
+ * query and streams live form values into `data` as the editor types.
+ * On the public site it returns the build-time content untouched — the
+ * only tinacms code in the bundle is the small useTina/tinaField hook.
+ */
+const PAGE_QUERY = /* GraphQL */ `
+  query Page($relativePath: String!) {
+    page(relativePath: $relativePath) {
+      id
+      _sys {
+        filename
+      }
+      title
+      navLabel
+      navOrder
+      blocks {
+        __typename
+        ... on PageBlocksHero {
+          kicker
+          heading
+          accentWord
+          tagline
+        }
+        ... on PageBlocksProse {
+          heading
+          body
+        }
+        ... on PageBlocksCards {
+          heading
+          items {
+            title
+            text
+            linkLabel
+            linkTo
+          }
+        }
+        ... on PageBlocksSplit {
+          heading
+          body
+          image
+          imageAlt
+          imageLeft
+        }
+      }
+    }
+  }
+`;
 
 function Nav() {
   return (
@@ -40,7 +90,14 @@ function Footer() {
 function Page({ slug: fixedSlug }) {
   const params = useParams();
   const slug = fixedSlug || params.slug;
-  const page = getPage(slug);
+  const staticPage = getPage(slug);
+
+  const { data } = useTina({
+    query: PAGE_QUERY,
+    variables: { relativePath: `${slug}.json` },
+    data: { page: staticPage },
+  });
+  const page = data?.page;
 
   useEffect(() => {
     document.title = page

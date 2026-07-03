@@ -94,10 +94,10 @@ function Node({ node }) {
   }
 }
 
-export default function RichText({ content, className = "" }) {
+export default function RichText({ content, className = "", ...rest }) {
   if (!content) return null;
   return (
-    <div className={`richtext ${className}`.trim()}>
+    <div className={`richtext ${className}`.trim()} {...rest}>
       <Node node={content} />
     </div>
   );
