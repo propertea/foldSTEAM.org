@@ -4,22 +4,16 @@ import { FoldProvider, FoldLink } from "./components/FoldRouter.jsx";
 import Blocks from "./blocks/index.jsx";
 import { site, navPages, getPage } from "./lib/content.js";
 
-function OrigamiMark() {
-  return (
-    <svg className="mark" viewBox="0 0 32 32" aria-hidden="true">
-      <path d="M16 3 29 16 16 29 3 16Z" fill="var(--crane)" />
-      <path d="M16 3 29 16H16Z" fill="var(--crane-deep)" />
-    </svg>
-  );
-}
-
 function Nav() {
   return (
     <nav className="nav">
       <div className="container nav-inner">
         <FoldLink to="/" className="brand">
-          <OrigamiMark />
-          <span>{site.siteTitle}</span>
+          <img
+            className="brand-logo"
+            src={`${import.meta.env.BASE_URL}folds-wordmark.png`}
+            alt={`${site.siteTitle} — Forum for Origami Learning, Design & STEAM`}
+          />
         </FoldLink>
         <div className="nav-links">
           {navPages.map((p) => (
