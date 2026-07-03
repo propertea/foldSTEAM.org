@@ -1,0 +1,25 @@
+{
+  "name": "origami-site",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "tinacms dev -c \"vite\"",
+    "build": "vite build",
+    "build:admin": "tinacms build && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@fontsource/karla": "^5.1.0",
+    "@fontsource/shippori-mincho": "^5.1.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.28.0"
+  },
+  "devDependencies": {
+    "@tinacms/cli": "^1.9.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "tinacms": "^2.7.0",
+    "vite": "^5.4.11"
+  }
+}

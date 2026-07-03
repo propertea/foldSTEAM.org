@@ -1,0 +1,98 @@
+{
+  "title": "About",
+  "navLabel": "About",
+  "navOrder": 2,
+  "blocks": [
+    {
+      "_template": "hero",
+      "kicker": "About this template",
+      "heading": "Folded, not printed",
+      "accentWord": "Folded",
+      "tagline": "The design belongs to the developer. The words belong to you."
+    },
+    {
+      "_template": "split",
+      "heading": "Images sit beside your words",
+      "imageLeft": true,
+      "imageAlt": "",
+      "body": {
+        "type": "root",
+        "children": [
+          {
+            "type": "p",
+            "children": [
+              { "type": "text", "text": "Upload a photo in the editor and it appears here, framed in paper. Until you add one, a crease pattern holds its place — so the layout never looks broken while you're still writing." }
+            ]
+          },
+          {
+            "type": "p",
+            "children": [
+              { "type": "text", "text": "Flip the switch in the editor to move the image to the other side." }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "_template": "prose",
+      "heading": "Writing works the way you expect",
+      "body": {
+        "type": "root",
+        "children": [
+          {
+            "type": "p",
+            "children": [
+              { "type": "text", "text": "The text editor supports the usual things:" }
+            ]
+          },
+          {
+            "type": "ul",
+            "children": [
+              {
+                "type": "li",
+                "children": [
+                  {
+                    "type": "lic",
+                    "children": [
+                      { "type": "text", "text": "Bold", "bold": true },
+                      { "type": "text", "text": " and " },
+                      { "type": "text", "text": "italic", "italic": true },
+                      { "type": "text", "text": " text" }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "li",
+                "children": [
+                  {
+                    "type": "lic",
+                    "children": [
+                      { "type": "text", "text": "Bulleted and numbered lists" }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "li",
+                "children": [
+                  {
+                    "type": "lic",
+                    "children": [
+                      { "type": "text", "text": "Links, like this one to the " },
+                      {
+                        "type": "a",
+                        "url": "/",
+                        "children": [{ "type": "text", "text": "home page" }]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

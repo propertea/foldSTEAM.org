@@ -1,0 +1,9 @@
+node_modules
+dist
+
+# Tina generated output (rebuilt on every build)
+public/admin
+tina/__generated__
+
+.env
+.DS_Store

@@ -1,0 +1,61 @@
+{
+  "title": "Home",
+  "navLabel": "Home",
+  "navOrder": 1,
+  "blocks": [
+    {
+      "_template": "hero",
+      "kicker": "One sheet, no cuts",
+      "heading": "A site that unfolds",
+      "accentWord": "unfolds",
+      "tagline": "Every page you open is a fold. Every section arrives like paper opening. Edit anything you see — the creases take care of themselves."
+    },
+    {
+      "_template": "prose",
+      "heading": "How this site works",
+      "body": {
+        "type": "root",
+        "children": [
+          {
+            "type": "p",
+            "children": [
+              { "type": "text", "text": "This whole page is editable. Open the " },
+              { "type": "text", "text": "admin area", "bold": true },
+              { "type": "text", "text": " and click any page to change its words, add sections, or rearrange them. You never need to touch code, and you can't break the design — the folds, colors and type are locked in place." }
+            ]
+          },
+          {
+            "type": "p",
+            "children": [
+              { "type": "text", "text": "Pages are built from stackable sections: a hero banner, text like this, card grids, and image-with-text rows. Add as many as you like, in any order." }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "_template": "cards",
+      "heading": "What you can add to a page",
+      "items": [
+        {
+          "title": "Hero banner",
+          "text": "A big opening statement with an optional red accent word and a supporting line."
+        },
+        {
+          "title": "Text section",
+          "text": "Free-form writing with headings, bold, lists, links and inline images."
+        },
+        {
+          "title": "Card grid",
+          "text": "Rows of folded-corner cards, like these. Good for services, people, or shows."
+        },
+        {
+          "title": "Image + text",
+          "text": "A photo beside a paragraph, with a switch to flip which side the image sits on.",
+          "linkLabel": "See one on the About page",
+          "linkTo": "/about"
+        }
+      ]
+    }
+  ]
+}

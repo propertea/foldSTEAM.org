@@ -1,0 +1,695 @@
+/* ==========================================================================
+   Origami Site — design tokens
+   Paper white, ink navy, crane red. Shippori Mincho display, Karla body.
+   ========================================================================== */
+
+:root {
+  --paper: #f8f6f1;
+  --paper-deep: #eae4d8;
+  --paper-bright: #fffdf9;
+  --paper-back: #f0ebe0; /* reverse side of the sheet, a shade off the front */
+  --ink: #1f2833;
+  --ink-soft: #47525f;
+  --washi: #8195a6;
+  --crane: #be3e2b;
+  --crane-deep: #932d20;
+
+  --font-display: "Shippori Mincho", "Times New Roman", serif;
+  --font-body: "Karla", "Helvetica Neue", sans-serif;
+
+  --hairline: 1px solid rgba(31, 40, 51, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--crane);
+  color: var(--paper);
+}
+
+:focus-visible {
+  outline: 2px solid var(--crane);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.container {
+  max-width: 68rem;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 5vw, 2.5rem);
+}
+
+.narrow {
+  max-width: 46rem;
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.6rem 1rem;
+  z-index: 200;
+}
+.skip-link:focus {
+  left: 0.5rem;
+  top: 0.5rem;
+}
+
+/* ==========================================================================
+   Navigation
+   ========================================================================== */
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--paper);
+  border-bottom: var(--hairline);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 0.9rem;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.mark {
+  width: 1.15rem;
+  height: 1.15rem;
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.brand:hover .mark {
+  transform: rotate(90deg);
+}
+
+.nav-links {
+  display: flex;
+  gap: clamp(1rem, 3vw, 1.8rem);
+}
+
+.nav-links a {
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  text-decoration: none;
+  padding-block: 0.2rem;
+}
+.nav-links a:hover {
+  color: var(--crane);
+}
+.nav-links a.is-active {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--crane);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 7px;
+}
+
+/* ==========================================================================
+   Hero
+   ========================================================================== */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(4rem, 11vw, 8rem) clamp(3rem, 8vw, 6rem);
+  border-bottom: var(--hairline);
+}
+
+.hero-crease {
+  position: absolute;
+  top: -12%;
+  right: -8%;
+  width: clamp(280px, 52vmin, 560px);
+  height: auto;
+  transform: rotate(12deg);
+  pointer-events: none;
+}
+
+.crease-pattern .cp-edge {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.5;
+  opacity: 0.1;
+}
+.crease-pattern .cp-mountain {
+  stroke: var(--ink);
+  stroke-width: 1;
+  opacity: 0.16;
+}
+.crease-pattern .cp-valley {
+  stroke: var(--crane);
+  stroke-width: 1;
+  stroke-dasharray: 6 7;
+  opacity: 0.18;
+}
+
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0 1.2rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--washi);
+}
+.kicker::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  background: var(--crane);
+  transform: rotate(45deg);
+  flex: none;
+}
+
+.hero-heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.7rem, 7.5vw, 5.2rem);
+  line-height: 1.06;
+  letter-spacing: -0.015em;
+  max-width: 15ch;
+}
+
+.hero-heading .accent {
+  color: var(--crane);
+}
+
+.hero-tagline {
+  margin: 1.6rem 0 0;
+  max-width: 46ch;
+  font-size: clamp(1.05rem, 2vw, 1.2rem);
+  color: var(--ink-soft);
+}
+
+/* ==========================================================================
+   Sections & rich text
+   ========================================================================== */
+
+.section {
+  padding-block: clamp(3rem, 7vw, 5rem) 1rem;
+}
+
+.section-heading {
+  margin: 0 0 1.4rem;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.6rem, 3.4vw, 2.2rem);
+  line-height: 1.2;
+}
+
+.richtext p {
+  margin: 0 0 1.1rem;
+  line-height: 1.75;
+  color: var(--ink-soft);
+  max-width: 62ch;
+}
+.richtext h2,
+.richtext h3,
+.richtext h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  margin: 2rem 0 0.8rem;
+  line-height: 1.25;
+  color: var(--ink);
+}
+.richtext h2 { font-size: 1.7rem; }
+.richtext h3 { font-size: 1.35rem; }
+.richtext h4 { font-size: 1.1rem; }
+.richtext a {
+  color: var(--crane);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.richtext a:hover { color: var(--crane-deep); }
+.richtext ul,
+.richtext ol {
+  margin: 0 0 1.1rem;
+  padding-left: 1.4rem;
+  color: var(--ink-soft);
+}
+.richtext li { margin-bottom: 0.4rem; line-height: 1.65; }
+.richtext blockquote {
+  margin: 1.4rem 0;
+  padding: 0.2rem 0 0.2rem 1.2rem;
+  border-left: 3px solid var(--crane);
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--ink);
+}
+.richtext pre {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 1rem 1.2rem;
+  overflow-x: auto;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+.richtext hr {
+  border: 0;
+  border-top: var(--hairline);
+  margin: 2rem 0;
+}
+.rt-figure {
+  margin: 1.6rem 0;
+}
+.rt-figure img {
+  background: var(--paper-bright);
+  border: var(--hairline);
+  padding: 8px;
+}
+.rt-figure figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--washi);
+}
+
+.empty-page {
+  color: var(--washi);
+  font-style: italic;
+}
+
+/* ==========================================================================
+   Cards — folded bottom-right corner
+   ========================================================================== */
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.3rem;
+  margin-top: 0.6rem;
+}
+
+.card {
+  position: relative;
+  height: 100%;
+  background: var(--paper-bright);
+  border: var(--hairline);
+  padding: 1.5rem 1.4rem 1.6rem;
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - 24px),
+    calc(100% - 24px) 100%,
+    0 100%
+  );
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 24px;
+  height: 24px;
+  clip-path: polygon(0 100%, 100% 0, 0 0);
+  background: linear-gradient(315deg, #cfc6b4 0%, var(--paper-deep) 70%);
+}
+
+.card h3 {
+  margin: 0 0 0.55rem;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+
+.card p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+.card-link {
+  display: inline-block;
+  margin-top: 0.9rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--crane);
+  text-decoration: none;
+}
+.card-link::after {
+  content: " →";
+}
+.card-link:hover {
+  color: var(--crane-deep);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ==========================================================================
+   Split (image + text)
+   ========================================================================== */
+
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: clamp(1.6rem, 5vw, 3.5rem);
+  align-items: center;
+}
+
+.split.image-left .split-media { order: -1; }
+
+.split-media img,
+.split-placeholder {
+  width: 100%;
+  background: var(--paper-bright);
+  border: var(--hairline);
+  padding: 10px;
+}
+
+.split-placeholder {
+  aspect-ratio: 4 / 3;
+  display: grid;
+  place-items: center;
+  background: var(--paper-deep);
+}
+.split-placeholder svg {
+  width: 62%;
+  height: auto;
+}
+
+@media (max-width: 720px) {
+  .split {
+    grid-template-columns: 1fr;
+  }
+  .split.image-left .split-media { order: 0; }
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+.footer {
+  margin-top: clamp(3rem, 8vw, 5rem);
+  border-top: var(--hairline);
+  padding-block: 2.2rem;
+}
+
+.footer p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--washi);
+}
+
+/* ==========================================================================
+   The fold — route transition overlay
+   ========================================================================== */
+
+.fold-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.fold-overlay.folding {
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* the sheet area; width is set inline to the snapshot's viewport width so
+   slices stay aligned even if the new page changes scrollbar visibility */
+.fold-layer {
+  position: absolute;
+  inset: 0;
+  perspective: 1400px;
+  --fold-ease: cubic-bezier(0.55, 0.06, 0.68, 0.19);
+}
+
+/* a full-width copy of the snapshot page; parents clip it to a slice */
+.fold-strip-inner {
+  position: relative;
+}
+
+/* --------------------------------------------------------------------------
+   Accordion — connected zigzag pleat. Segments are nested so each one
+   hinges on the bottom edge of the segment below: one sheet, shared
+   creases, a single fold angle. The root is attached to the bottom of
+   the screen and the sheet folds up from the top, gathering downward.
+   -------------------------------------------------------------------------- */
+
+.acc-chain {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+.acc-seg {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: var(--h);
+  top: calc(-1 * var(--h)); /* sits on top of the parent segment */
+  transform-origin: center bottom;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.acc-seg.is-root {
+  top: auto;
+  bottom: 0;
+}
+
+.acc-face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--paper);
+  backface-visibility: hidden;
+}
+
+/* creases deepen as the pleat closes: mountains fall into shadow toward
+   their far edge, valleys toward their hinge */
+.acc-face::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(
+    to top,
+    rgba(31, 40, 51, 0.02),
+    rgba(31, 40, 51, 0.32)
+  );
+}
+.acc-seg.is-valley > .acc-face::after {
+  background: linear-gradient(
+    to top,
+    rgba(31, 40, 51, 0.32),
+    rgba(31, 40, 51, 0.02)
+  );
+}
+
+/* one shared fold angle — every hinge moves together, no stagger.
+   Keyframes (not transitions) so animation starts from the mount frame. */
+.fold-overlay.folding .acc-seg.is-root {
+  animation: acc-root var(--fold-ms) var(--fold-ease) both;
+}
+.fold-overlay.folding .acc-seg.is-valley {
+  animation: acc-valley var(--fold-ms) var(--fold-ease) both;
+}
+.fold-overlay.folding .acc-seg.is-mountain {
+  animation: acc-mountain var(--fold-ms) var(--fold-ease) both;
+}
+.fold-overlay.folding .acc-face::after {
+  animation: fold-shade var(--fold-ms) var(--fold-ease) both;
+}
+
+@keyframes acc-root {
+  to {
+    transform: rotateX(-90deg);
+  }
+}
+@keyframes acc-valley {
+  to {
+    transform: rotateX(180deg);
+  }
+}
+@keyframes acc-mountain {
+  to {
+    transform: rotateX(-180deg);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Base folds (bird / waterbomb) — the sheet is partitioned into flap
+   regions (clip-path polygons), each rotating about its own crease line
+   (rotate3d axis via CSS vars). Valley flaps lift toward the viewer and
+   land showing the sheet's off-color reverse; mountain flaps swing
+   behind and vanish at edge-on (backfaces hidden).
+   -------------------------------------------------------------------------- */
+
+.flap {
+  position: absolute;
+  inset: 0;
+  background: var(--paper);
+  backface-visibility: hidden;
+  will-change: transform;
+  --flap-ease: cubic-bezier(0.55, 0.1, 0.45, 0.9);
+}
+.fold-overlay.folding .flap {
+  animation: flap-fold var(--fold-ms) var(--flap-ease) var(--fold-delay) both;
+}
+@keyframes flap-fold {
+  from {
+    transform: rotate3d(var(--ax), var(--ay), 0, 0deg);
+  }
+  to {
+    transform: rotate3d(var(--ax), var(--ay), 0, var(--target));
+  }
+}
+
+/* the reverse side of a valley flap: same crease, pre-flipped 180°, so
+   it becomes visible exactly when the flap passes edge-on; it hides at
+   touchdown, when the carrier's painted patch takes over */
+.flap.flap-back {
+  background: var(--paper-back);
+  box-shadow: inset 0 0 34px rgba(31, 40, 51, 0.07);
+}
+.fold-overlay.folding .flap.flap-back {
+  animation:
+    flap-back-fold var(--fold-ms) var(--flap-ease) var(--fold-delay) both,
+    flap-vanish 20ms linear var(--land-at) forwards;
+}
+@keyframes flap-back-fold {
+  from {
+    transform: rotate3d(var(--ax), var(--ay), 0, 180deg);
+  }
+  to {
+    transform: rotate3d(var(--ax), var(--ay), 0, calc(180deg + var(--target)));
+  }
+}
+@keyframes flap-vanish {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* a landed flap, painted onto the face of the flap that carries it on */
+.flap-patch {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  background: var(--paper-back);
+  box-shadow: inset 0 0 34px rgba(31, 40, 51, 0.07);
+}
+.fold-overlay.folding .flap-patch {
+  animation: flap-appear 20ms linear var(--land-at) forwards;
+}
+@keyframes flap-appear {
+  to {
+    opacity: 1;
+  }
+}
+
+/* ink veil that deepens as the flap turns away from the light */
+.flap-shade {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  background: rgba(31, 40, 51, 0.38);
+}
+.fold-overlay.folding .flap-shade {
+  animation: fold-shade var(--fold-ms) var(--flap-ease) var(--fold-delay) both;
+}
+
+@keyframes fold-shade {
+  to {
+    opacity: 1;
+  }
+}
+
+/* ==========================================================================
+   Unfold — scroll-in reveal
+   ========================================================================== */
+
+.unfold {
+  position: relative;
+  transform-origin: top center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .unfold {
+    opacity: 0;
+    transform: perspective(1200px) rotateX(-52deg);
+  }
+  .unfold::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      180deg,
+      rgba(31, 40, 51, 0.12),
+      rgba(31, 40, 51, 0) 65%
+    );
+    opacity: 1;
+    transition: opacity 0.9s ease var(--d, 0ms);
+  }
+  .unfold.is-open {
+    opacity: 1;
+    transform: perspective(1200px) rotateX(0deg);
+    transition:
+      transform 0.85s cubic-bezier(0.16, 0.84, 0.28, 1) var(--d, 0ms),
+      opacity 0.55s ease var(--d, 0ms);
+  }
+  .unfold.is-open::after {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .unfold {
+    opacity: 1;
+    transform: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
