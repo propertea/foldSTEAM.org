@@ -147,12 +147,9 @@ export default defineConfig({
         label: "Pages",
         path: "content/pages",
         format: "json",
-        ui: {
-          router: ({ document }) =>
-            document._sys.filename === "home"
-              ? "/#/"
-              : `/#/${document._sys.filename}`,
-        },
+        // No ui.router: this site doesn't use Tina's visual editing (the
+        // bundle ships zero tinacms code), so documents must open in the
+        // form editor, not the live-preview pane.
         fields: [
           {
             type: "string",

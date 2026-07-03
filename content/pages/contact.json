@@ -13,17 +13,7 @@
     {
       "_template": "prose",
       "heading": "Where to find us",
-      "body": {
-        "type": "root",
-        "children": [
-          {
-            "type": "p",
-            "children": [
-              { "type": "text", "text": "Put an email address, a booking link, rehearsal times — whatever people need. This is an ordinary text section, so edit it like any other." }
-            ]
-          }
-        ]
-      }
+      "body": "Put an email address, a booking link, rehearsal times — whatever people need. This is an ordinary text section, so edit it like any other.\n"
     }
   ]
 }

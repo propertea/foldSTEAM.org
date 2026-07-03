@@ -15,84 +15,12 @@
       "heading": "Images sit beside your words",
       "imageLeft": true,
       "imageAlt": "",
-      "body": {
-        "type": "root",
-        "children": [
-          {
-            "type": "p",
-            "children": [
-              { "type": "text", "text": "Upload a photo in the editor and it appears here, framed in paper. Until you add one, a crease pattern holds its place — so the layout never looks broken while you're still writing." }
-            ]
-          },
-          {
-            "type": "p",
-            "children": [
-              { "type": "text", "text": "Flip the switch in the editor to move the image to the other side." }
-            ]
-          }
-        ]
-      }
+      "body": "Upload a photo in the editor and it appears here, framed in paper. Until you add one, a crease pattern holds its place — so the layout never looks broken while you're still writing.\n\nFlip the switch in the editor to move the image to the other side.\n"
     },
     {
       "_template": "prose",
       "heading": "Writing works the way you expect",
-      "body": {
-        "type": "root",
-        "children": [
-          {
-            "type": "p",
-            "children": [
-              { "type": "text", "text": "The text editor supports the usual things:" }
-            ]
-          },
-          {
-            "type": "ul",
-            "children": [
-              {
-                "type": "li",
-                "children": [
-                  {
-                    "type": "lic",
-                    "children": [
-                      { "type": "text", "text": "Bold", "bold": true },
-                      { "type": "text", "text": " and " },
-                      { "type": "text", "text": "italic", "italic": true },
-                      { "type": "text", "text": " text" }
-                    ]
-                  }
-                ]
-              },
-              {
-                "type": "li",
-                "children": [
-                  {
-                    "type": "lic",
-                    "children": [
-                      { "type": "text", "text": "Bulleted and numbered lists" }
-                    ]
-                  }
-                ]
-              },
-              {
-                "type": "li",
-                "children": [
-                  {
-                    "type": "lic",
-                    "children": [
-                      { "type": "text", "text": "Links, like this one to the " },
-                      {
-                        "type": "a",
-                        "url": "/",
-                        "children": [{ "type": "text", "text": "home page" }]
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
+      "body": "The text editor supports the usual things:\n\n- **Bold** and *italic* text\n- Bulleted and numbered lists\n- Links, like this one to the [home page](/)\n"
     }
   ]
 }

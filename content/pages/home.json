@@ -13,25 +13,7 @@
     {
       "_template": "prose",
       "heading": "How this site works",
-      "body": {
-        "type": "root",
-        "children": [
-          {
-            "type": "p",
-            "children": [
-              { "type": "text", "text": "This whole page is editable. Open the " },
-              { "type": "text", "text": "admin area", "bold": true },
-              { "type": "text", "text": " and click any page to change its words, add sections, or rearrange them. You never need to touch code, and you can't break the design — the folds, colors and type are locked in place." }
-            ]
-          },
-          {
-            "type": "p",
-            "children": [
-              { "type": "text", "text": "Pages are built from stackable sections: a hero banner, text like this, card grids, and image-with-text rows. Add as many as you like, in any order." }
-            ]
-          }
-        ]
-      }
+      "body": "This whole page is editable. Open the **admin area** and click any page to change its words, add sections, or rearrange them. You never need to touch code, and you can't break the design — the folds, colors and type are locked in place.\n\nPages are built from stackable sections: a hero banner, text like this, card grids, and image-with-text rows. Add as many as you like, in any order.\n"
     },
     {
       "_template": "cards",
