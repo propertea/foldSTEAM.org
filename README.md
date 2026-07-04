@@ -60,6 +60,7 @@ Tell editors: **"your site slash admin"** is the only URL they need.
 - **Fold feel** — each navigation picks a random fold (`"accordion"`, `"bird"`, or `"waterbomb"`, never the same twice in a row); set `FOLD_STYLE` in `FoldRouter.jsx` to pin one. `SEGMENTS`, `ACCORDION_MS` and the flap plans tune them. Easing curves live under `.fold-layer` in the CSS.
 - **New section types** — add a template in `tina/config.js`, a component in `src/blocks/index.jsx`, register it in `registry`. That's the whole loop.
 - **New pages** — editors create them in the admin; they appear in the nav automatically via `navLabel`/`navOrder`.
+- **Folders & blog** — pages can live in folders (**Add Folder** under Pages); a folder page's URL is `/#/<folder>/<name>`. The "Page list (blog)" section lists a folder's pages newest-first (by each page's `date`) with an excerpt — see `/blog`. Keep folder names lowercase.
 
 ## Notes & trade-offs
 

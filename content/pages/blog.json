@@ -1,0 +1,19 @@
+{
+  "title": "Blog",
+  "navLabel": "Blog",
+  "navOrder": 4,
+  "blocks": [
+    {
+      "_template": "hero",
+      "kicker": "Notes & updates",
+      "heading": "The FOLDS blog",
+      "accentWord": "blog",
+      "tagline": "News, folds, and STEAM ideas from the forum."
+    },
+    {
+      "_template": "list",
+      "heading": "Latest posts",
+      "folder": "blog"
+    }
+  ]
+}

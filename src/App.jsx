@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { Routes, Route, useParams } from "react-router-dom";
 import { useTina } from "tinacms/dist/react";
 import { FoldProvider, FoldLink } from "./components/FoldRouter.jsx";
@@ -21,6 +21,7 @@ const PAGE_QUERY = /* GraphQL */ `
       title
       navLabel
       navOrder
+      date
       blocks {
         __typename
         ... on PageBlocksHero {
@@ -28,6 +29,10 @@ const PAGE_QUERY = /* GraphQL */ `
           heading
           accentWord
           tagline
+        }
+        ... on PageBlocksList {
+          heading
+          folder
         }
         ... on PageBlocksProse {
           heading
@@ -89,13 +94,18 @@ function Footer() {
 
 function Page({ slug: fixedSlug }) {
   const params = useParams();
-  const slug = fixedSlug || params.slug;
+  // "*" is the catch-all segment, so nested slugs like blog/my-post work
+  const slug = fixedSlug || (params["*"] || "").replace(/\/+$/, "");
   const staticPage = getPage(slug);
 
+  // useTina resets its live state whenever the `data` prop's identity
+  // changes, so this must be memoized — an inline literal here would
+  // clobber every streamed edit on the next render.
+  const tinaPayload = useMemo(() => ({ page: staticPage }), [staticPage]);
   const { data } = useTina({
     query: PAGE_QUERY,
     variables: { relativePath: `${slug}.json` },
-    data: { page: staticPage },
+    data: tinaPayload,
   });
   const page = data?.page;
 
@@ -132,7 +142,7 @@ export default function App() {
       <div id="main">
         <Routes>
           <Route path="/" element={<Page slug="home" />} />
-          <Route path="/:slug" element={<Page />} />
+          <Route path="*" element={<Page />} />
         </Routes>
       </div>
       <Footer />

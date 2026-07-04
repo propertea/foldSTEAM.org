@@ -3,7 +3,7 @@ import Unfold from "../components/Unfold.jsx";
 import RichText from "../components/RichText.jsx";
 import CreasePattern from "../components/CreasePattern.jsx";
 import { FoldLink } from "../components/FoldRouter.jsx";
-import { assetUrl } from "../lib/content.js";
+import { assetUrl, pages } from "../lib/content.js";
 
 /*
  * data-tina-field={tinaField(obj, "field")} makes the element a click
@@ -176,9 +176,95 @@ function Split({ block }) {
   );
 }
 
+/* ---------------------------- Page list ------------------------------ */
+
+// Plain text of a rich-text AST, for excerpts.
+function astText(node) {
+  if (!node) return "";
+  if (node.text) return node.text;
+  return (node.children || []).map(astText).join("");
+}
+
+function excerptOf(page) {
+  for (const b of page.blocks || []) {
+    if ((b._template === "prose" || b._template === "split") && b.body) {
+      const t = astText(b.body).trim();
+      if (t) return t.length > 150 ? `${t.slice(0, 150).trimEnd()}…` : t;
+    }
+  }
+  return "";
+}
+
+function formatDate(d) {
+  const parsed = new Date(d);
+  return isNaN(parsed)
+    ? ""
+    : parsed.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+}
+
+function PageList({ block }) {
+  const folder = (block.folder || "").replace(/^\/+|\/+$/g, "");
+  const posts = pages
+    .filter((p) => folder && p.slug.startsWith(`${folder}/`))
+    .sort(
+      (a, b) =>
+        (b.date || "").localeCompare(a.date || "") ||
+        (a.title || "").localeCompare(b.title || "")
+    );
+
+  return (
+    <section
+      className="section container narrow"
+      data-tina-field={tinaField(block)}
+    >
+      {block.heading && (
+        <Unfold>
+          <h2
+            className="section-heading"
+            data-tina-field={tinaField(block, "heading")}
+          >
+            {block.heading}
+          </h2>
+        </Unfold>
+      )}
+      {posts.length === 0 ? (
+        <p className="empty-page">
+          Nothing in “{folder || "…"}” yet. In the editor, use{" "}
+          <strong>Add Folder</strong> under Pages to create it, then add pages
+          inside — they'll be listed here, newest first.
+        </p>
+      ) : (
+        <div className="post-list">
+          {posts.map((p, i) => (
+            <Unfold key={p.slug} delay={i * 60}>
+              <article className="post-item">
+                <h3>
+                  <FoldLink to={`/${p.slug}`}>{p.title}</FoldLink>
+                </h3>
+                {p.date && <time dateTime={p.date}>{formatDate(p.date)}</time>}
+                {excerptOf(p) && <p>{excerptOf(p)}</p>}
+              </article>
+            </Unfold>
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
+
 /* ----------------------------- Renderer ------------------------------ */
 
-const registry = { hero: Hero, prose: Prose, cards: Cards, split: Split };
+const registry = {
+  hero: Hero,
+  prose: Prose,
+  cards: Cards,
+  split: Split,
+  list: PageList,
+};
 
 // Build-time content identifies blocks by _template; live data from the
 // visual editor identifies them by GraphQL __typename.
@@ -187,6 +273,7 @@ const TEMPLATE_OF = {
   PageBlocksProse: "prose",
   PageBlocksCards: "cards",
   PageBlocksSplit: "split",
+  PageBlocksList: "list",
 };
 
 export default function Blocks({ blocks }) {

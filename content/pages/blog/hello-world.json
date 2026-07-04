@@ -1,0 +1,17 @@
+{
+  "title": "Hello, world — the forum unfolds",
+  "date": "2026-07-03T12:00:00.000Z",
+  "blocks": [
+    {
+      "_template": "hero",
+      "kicker": "First post",
+      "heading": "Hello, world — the forum unfolds",
+      "accentWord": "unfolds",
+      "tagline": "Welcome to the FOLDS blog."
+    },
+    {
+      "_template": "prose",
+      "body": "This is a sample post. In the editor, open **Pages**, look inside the **blog** folder, and duplicate or edit this post — or add a new page to the folder and it will appear on the blog page automatically, newest first.\n\nGive each post a **date** so the list stays in order, and a hero section so the post has a headline.\n"
+    }
+  ]
+}

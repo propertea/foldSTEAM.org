@@ -4,14 +4,21 @@
 
 import site from "../../content/settings/site.json";
 
-const pageModules = import.meta.glob("../../content/pages/*.json", {
-  eager: true,
-});
+// Pages can nest in folders (content/pages/blog/my-post.json -> /blog/my-post).
+// Tina drops empty .gitkeep.json placeholders in new folders — exclude them.
+const pageModules = import.meta.glob(
+  ["../../content/pages/**/*.json", "!**/.gitkeep.json"],
+  { eager: true }
+);
 
-export const pages = Object.entries(pageModules).map(([path, mod]) => {
-  const slug = path.split("/").pop().replace(/\.json$/, "");
-  return { slug, ...mod.default };
-});
+export const pages = Object.entries(pageModules)
+  .map(([path, mod]) => {
+    const slug = path
+      .replace(/^.*?content\/pages\//, "")
+      .replace(/\.json$/, "");
+    return { slug, ...mod.default };
+  })
+  .filter((p) => p.title);
 
 export const navPages = pages
   .filter((p) => p.navLabel)

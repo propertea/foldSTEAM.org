@@ -304,6 +304,52 @@ img {
 }
 
 /* ==========================================================================
+   Page list (blog index)
+   ========================================================================== */
+
+.post-list {
+  display: grid;
+  gap: 1.7rem;
+  margin-top: 0.6rem;
+}
+
+.post-item {
+  border-bottom: var(--hairline);
+  padding-bottom: 1.5rem;
+}
+
+.post-item h3 {
+  margin: 0 0 0.25rem;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.35rem;
+  line-height: 1.3;
+}
+
+.post-item h3 a {
+  color: var(--ink);
+  text-decoration: none;
+}
+.post-item h3 a:hover {
+  color: var(--crane);
+}
+
+.post-item time {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--washi);
+}
+
+.post-item p {
+  margin: 0.5rem 0 0;
+  color: var(--ink-soft);
+  max-width: 62ch;
+}
+
+/* ==========================================================================
    Cards — folded bottom-right corner
    ========================================================================== */
 
@@ -382,6 +428,7 @@ img {
   align-items: center;
 }
 
+.split .split-media { order: 1; } /* image right by default */
 .split.image-left .split-media { order: -1; }
 
 .split-media img,
@@ -407,7 +454,9 @@ img {
   .split {
     grid-template-columns: 1fr;
   }
-  .split.image-left .split-media { order: 0; }
+  /* stacked: image above text either way */
+  .split .split-media,
+  .split.image-left .split-media { order: -1; }
 }
 
 /* ==========================================================================

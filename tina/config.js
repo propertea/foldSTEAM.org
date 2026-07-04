@@ -119,6 +119,25 @@ const splitBlock = {
   ],
 };
 
+const listBlock = {
+  name: "list",
+  label: "Page list (blog)",
+  ui: {
+    itemProps: (item) => ({ label: `List — ${item?.folder || "folder"}` }),
+    defaultItem: { heading: "Latest posts", folder: "blog" },
+  },
+  fields: [
+    { type: "string", name: "heading", label: "Section heading" },
+    {
+      type: "string",
+      name: "folder",
+      label: "Folder to list",
+      description:
+        "Pages inside this folder (under Pages) are listed newest first. Example: blog",
+    },
+  ],
+};
+
 /* ------------------------------ Config ------------------------------- */
 
 export default defineConfig({
@@ -150,11 +169,12 @@ export default defineConfig({
         ui: {
           // Opens documents in visual editing at the live page URL.
           // The site hydrates via useTina (src/App.jsx), so edits render
-          // in the real design as you type.
-          router: ({ document }) =>
-            document._sys.filename === "home"
-              ? "/#/"
-              : `/#/${document._sys.filename}`,
+          // in the real design as you type. relativePath keeps folder
+          // nesting (blog/my-post.json -> /#/blog/my-post).
+          router: ({ document }) => {
+            const slug = document._sys.relativePath.replace(/\.json$/, "");
+            return slug === "home" ? "/#/" : `/#/${slug}`;
+          },
         },
         fields: [
           {
@@ -178,11 +198,18 @@ export default defineConfig({
             description: "Lower numbers appear first.",
           },
           {
+            type: "datetime",
+            name: "date",
+            label: "Date",
+            description:
+              "Orders this page in blog-style lists (newest first). Optional for regular pages.",
+          },
+          {
             type: "object",
             name: "blocks",
             label: "Page sections",
             list: true,
-            templates: [heroBlock, proseBlock, cardsBlock, splitBlock],
+            templates: [heroBlock, proseBlock, cardsBlock, splitBlock, listBlock],
           },
         ],
       },
