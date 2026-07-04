@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { tinaField } from "tinacms/dist/react";
 import Unfold from "../components/Unfold.jsx";
 import RichText from "../components/RichText.jsx";
@@ -176,6 +177,131 @@ function Split({ block }) {
   );
 }
 
+/* ------------------------------ Gallery ------------------------------ */
+
+function Gallery({ block }) {
+  const images = (block.images || []).filter((im) => im?.src);
+  const [open, setOpen] = useState(null);
+  // clamp if images are removed in the editor while the lightbox is up
+  const openIdx = open !== null && open < images.length ? open : null;
+
+  const close = () => setOpen(null);
+  const step = (d) =>
+    setOpen((i) => (i === null ? i : (i + d + images.length) % images.length));
+
+  useEffect(() => {
+    if (openIdx === null) return;
+    const onKey = (e) => {
+      if (e.key === "Escape") close();
+      if (e.key === "ArrowRight") step(1);
+      if (e.key === "ArrowLeft") step(-1);
+    };
+    window.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [openIdx === null, images.length]);
+
+  return (
+    <section className="section container" data-tina-field={tinaField(block)}>
+      {block.heading && (
+        <Unfold>
+          <h2
+            className="section-heading"
+            data-tina-field={tinaField(block, "heading")}
+          >
+            {block.heading}
+          </h2>
+        </Unfold>
+      )}
+      {images.length === 0 ? (
+        <p className="empty-page">
+          No images yet — add some to this gallery in the editor.
+        </p>
+      ) : (
+        <div
+          className="gallery-grid"
+          data-tina-field={tinaField(block, "images")}
+        >
+          {images.map((im, i) => (
+            <Unfold key={i} delay={i * 50}>
+              <button
+                type="button"
+                className="gallery-tile"
+                onClick={() => setOpen(i)}
+                aria-label={`View image: ${im.alt || `image ${i + 1}`}`}
+                data-tina-field={tinaField(im, "src")}
+              >
+                <img src={assetUrl(im.src)} alt={im.alt || ""} loading="lazy" />
+              </button>
+            </Unfold>
+          ))}
+        </div>
+      )}
+
+      {openIdx !== null && (
+        <div
+          className="lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Image viewer"
+          onClick={close}
+        >
+          <button
+            type="button"
+            className="lb-close"
+            aria-label="Close"
+            autoFocus
+            onClick={close}
+          >
+            ×
+          </button>
+          {images.length > 1 && (
+            <button
+              type="button"
+              className="lb-arrow lb-prev"
+              aria-label="Previous image"
+              onClick={(e) => {
+                e.stopPropagation();
+                step(-1);
+              }}
+            >
+              ‹
+            </button>
+          )}
+          <figure onClick={(e) => e.stopPropagation()}>
+            <img
+              src={assetUrl(images[openIdx].src)}
+              alt={images[openIdx].alt || ""}
+            />
+            {images[openIdx].caption && (
+              <figcaption>{images[openIdx].caption}</figcaption>
+            )}
+            <div className="lb-count">
+              {openIdx + 1} / {images.length}
+            </div>
+          </figure>
+          {images.length > 1 && (
+            <button
+              type="button"
+              className="lb-arrow lb-next"
+              aria-label="Next image"
+              onClick={(e) => {
+                e.stopPropagation();
+                step(1);
+              }}
+            >
+              ›
+            </button>
+          )}
+        </div>
+      )}
+    </section>
+  );
+}
+
 /* ---------------------------- Page list ------------------------------ */
 
 // Plain text of a rich-text AST, for excerpts.
@@ -263,6 +389,7 @@ const registry = {
   prose: Prose,
   cards: Cards,
   split: Split,
+  gallery: Gallery,
   list: PageList,
 };
 
@@ -273,6 +400,7 @@ const TEMPLATE_OF = {
   PageBlocksProse: "prose",
   PageBlocksCards: "cards",
   PageBlocksSplit: "split",
+  PageBlocksGallery: "gallery",
   PageBlocksList: "list",
 };
 

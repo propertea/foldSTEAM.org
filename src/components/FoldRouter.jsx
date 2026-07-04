@@ -234,6 +234,43 @@ export function FoldProvider({ children }) {
   const contentRef = useRef(null);
   const lastStyle = useRef(null);
 
+  /*
+   * Unsaved-edit tracking (editor only). The admin streams an updateData
+   * message on every form change; we keep the first payload per query as
+   * the baseline and compare the latest against it. Reverting an edit
+   * makes the page clean again. Caveat: the admin sends no "saved"
+   * signal, so after a save the flag stays set until the next page
+   * switch — one possibly-unneeded confirm, never a missed one.
+   */
+  const baselineData = useRef(new Map());
+  const latestData = useRef(new Map());
+  useEffect(() => {
+    if (!inEditor) return;
+    const onMessage = (e) => {
+      if (e.data?.type === "updateData" && e.data.id) {
+        const s = JSON.stringify(e.data.data);
+        if (!baselineData.current.has(e.data.id)) {
+          baselineData.current.set(e.data.id, s);
+        }
+        latestData.current.set(e.data.id, s);
+      }
+    };
+    window.addEventListener("message", onMessage);
+    return () => window.removeEventListener("message", onMessage);
+  }, [inEditor]);
+
+  const hasUnsavedEdits = () => {
+    for (const [id, s] of latestData.current) {
+      if (baselineData.current.get(id) !== s) return true;
+    }
+    return false;
+  };
+
+  const resetEditTracking = () => {
+    baselineData.current.clear();
+    latestData.current.clear();
+  };
+
   /* a random fold each navigation, never the same one twice in a row */
   const pickStyle = () => {
     if (FOLD_STYLE) return FOLD_STYLE;
@@ -281,17 +318,19 @@ export function FoldProvider({ children }) {
 
   const go = (to) => {
     if (to === location.pathname) return;
-    // Inside the editor, switching pages destroys the current page's
-    // unsaved form state (the admin rebuilds all forms on URL change),
-    // so make leaving an explicit choice.
+    // Switching pages in the editor destroys unsaved form state (the
+    // admin rebuilds all forms on URL change), so confirm — but only
+    // when this page has actually been edited since it loaded.
     if (
       inEditor &&
+      hasUnsavedEdits() &&
       !window.confirm(
-        "Switch pages inside the editor?\n\nAny UNSAVED changes on this page will be lost. Save first if you want to keep them."
+        "This page has edits from this session.\n\nIf you haven't saved them, leaving will discard them. (Already saved? Then it's safe to continue.)"
       )
     ) {
       return;
     }
+    if (inEditor) resetEditTracking();
     if (phase !== "idle" || prefersReducedMotion()) {
       navigate(to);
       window.scrollTo(0, 0);

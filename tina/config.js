@@ -119,6 +119,37 @@ const splitBlock = {
   ],
 };
 
+const galleryBlock = {
+  name: "gallery",
+  label: "Image gallery",
+  ui: {
+    itemProps: (item) => ({ label: `Gallery — ${item?.heading || "images"}` }),
+  },
+  fields: [
+    { type: "string", name: "heading", label: "Section heading" },
+    {
+      type: "object",
+      name: "images",
+      label: "Images",
+      list: true,
+      ui: {
+        itemProps: (item) => ({
+          label: item?.alt || item?.src?.split("/").pop() || "Image",
+        }),
+      },
+      fields: [
+        { type: "image", name: "src", label: "Image" },
+        {
+          type: "string",
+          name: "alt",
+          label: "Description (for accessibility)",
+        },
+        { type: "string", name: "caption", label: "Caption (optional)" },
+      ],
+    },
+  ],
+};
+
 const listBlock = {
   name: "list",
   label: "Page list (blog)",
@@ -209,7 +240,14 @@ export default defineConfig({
             name: "blocks",
             label: "Page sections",
             list: true,
-            templates: [heroBlock, proseBlock, cardsBlock, splitBlock, listBlock],
+            templates: [
+              heroBlock,
+              proseBlock,
+              cardsBlock,
+              splitBlock,
+              galleryBlock,
+              listBlock,
+            ],
           },
         ],
       },

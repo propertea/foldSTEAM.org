@@ -54,6 +54,14 @@ const PAGE_QUERY = /* GraphQL */ `
           imageAlt
           imageLeft
         }
+        ... on PageBlocksGallery {
+          heading
+          images {
+            src
+            alt
+            caption
+          }
+        }
       }
     }
   }

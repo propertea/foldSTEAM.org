@@ -304,6 +304,127 @@ img {
 }
 
 /* ==========================================================================
+   Gallery — 3-across grid, click to open the lightbox
+   ========================================================================== */
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(0.5rem, 1.6vw, 1.1rem);
+  margin-top: 0.6rem;
+}
+
+.gallery-tile {
+  display: block;
+  width: 100%;
+  padding: 6px;
+  border: var(--hairline);
+  background: var(--paper-bright);
+  cursor: zoom-in;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.gallery-tile:hover {
+  transform: translateY(-3px);
+}
+
+.gallery-tile img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 90; /* above nav (50), below the fold overlay (100) */
+  display: grid;
+  place-items: center;
+  padding: 4vh 5vw;
+  background: rgba(31, 40, 51, 0.88);
+  animation: lb-fade 0.2s ease both;
+}
+@keyframes lb-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+.lightbox figure {
+  margin: 0;
+  max-width: 90vw;
+  text-align: center;
+}
+
+.lightbox img {
+  max-width: min(88vw, 70rem);
+  max-height: 78vh;
+  background: var(--paper-bright);
+  padding: 10px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+.lightbox figcaption {
+  margin-top: 0.7rem;
+  color: var(--paper);
+  font-size: 0.95rem;
+}
+
+.lb-count {
+  margin-top: 0.35rem;
+  color: rgba(248, 246, 241, 0.6);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+}
+
+.lb-close,
+.lb-arrow {
+  position: absolute;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 2.8rem;
+  height: 2.8rem;
+  border: none;
+  border-radius: 999px;
+  background: rgba(248, 246, 241, 0.12);
+  color: var(--paper);
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.lb-close:hover,
+.lb-arrow:hover {
+  background: rgba(248, 246, 241, 0.28);
+}
+
+.lb-close {
+  top: 1rem;
+  right: 1rem;
+}
+.lb-arrow {
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2.4rem;
+  padding-bottom: 0.2rem;
+}
+.lb-prev {
+  left: 1rem;
+}
+.lb-next {
+  right: 1rem;
+}
+
+@media (max-width: 560px) {
+  .lb-arrow {
+    top: auto;
+    bottom: 1rem;
+    transform: none;
+  }
+}
+
+/* ==========================================================================
    Page list (blog index)
    ========================================================================== */
 
