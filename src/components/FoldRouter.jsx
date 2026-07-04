@@ -7,6 +7,7 @@ import {
   useState,
 } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useEditState } from "tinacms/dist/react";
 
 /*
  * The origami page transition — the page is ONE sheet of paper.
@@ -225,6 +226,8 @@ function BaseFold({ snapshot }) {
 export function FoldProvider({ children }) {
   const navigate = useNavigate();
   const location = useLocation();
+  // true only inside the Tina admin's editing iframe
+  const { edit: inEditor } = useEditState();
   const [phase, setPhase] = useState("idle");
   const [snapshot, setSnapshot] = useState(null);
   const timers = useRef([]);
@@ -278,6 +281,17 @@ export function FoldProvider({ children }) {
 
   const go = (to) => {
     if (to === location.pathname) return;
+    // Inside the editor, switching pages destroys the current page's
+    // unsaved form state (the admin rebuilds all forms on URL change),
+    // so make leaving an explicit choice.
+    if (
+      inEditor &&
+      !window.confirm(
+        "Switch pages inside the editor?\n\nAny UNSAVED changes on this page will be lost. Save first if you want to keep them."
+      )
+    ) {
+      return;
+    }
     if (phase !== "idle" || prefersReducedMotion()) {
       navigate(to);
       window.scrollTo(0, 0);

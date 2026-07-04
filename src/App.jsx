@@ -3,7 +3,7 @@ import { Routes, Route, useParams } from "react-router-dom";
 import { useTina } from "tinacms/dist/react";
 import { FoldProvider, FoldLink } from "./components/FoldRouter.jsx";
 import Blocks from "./blocks/index.jsx";
-import { site, navPages, getPage } from "./lib/content.js";
+import { site, pages, getPage } from "./lib/content.js";
 
 /*
  * Visual editing: inside the Tina admin preview, useTina registers this
@@ -59,7 +59,57 @@ const PAGE_QUERY = /* GraphQL */ `
   }
 `;
 
+/* The nav subscribes to every page's menu fields so label/position edits
+   render live in the editor, same as page content. */
+const NAV_QUERY = /* GraphQL */ `
+  query NavPages {
+    pageConnection {
+      edges {
+        node {
+          __typename
+          id
+          _sys {
+            relativePath
+          }
+          navLabel
+          navOrder
+        }
+      }
+    }
+  }
+`;
+
+// Module-level constant: useTina requires a stable `data` identity.
+const NAV_INITIAL = {
+  pageConnection: {
+    edges: pages.map((p) => ({
+      node: {
+        __typename: "Page",
+        id: p.slug,
+        _sys: { relativePath: `${p.slug}.json` },
+        navLabel: p.navLabel ?? null,
+        navOrder: p.navOrder ?? null,
+      },
+    })),
+  },
+};
+
 function Nav() {
+  const { data } = useTina({
+    query: NAV_QUERY,
+    variables: {},
+    data: NAV_INITIAL,
+  });
+  const links = (data?.pageConnection?.edges || [])
+    .map((e) => e?.node)
+    .filter((n) => n?.navLabel)
+    .map((n) => ({
+      slug: n._sys.relativePath.replace(/\.json$/, ""),
+      navLabel: n.navLabel,
+      navOrder: n.navOrder,
+    }))
+    .sort((a, b) => (a.navOrder ?? 99) - (b.navOrder ?? 99));
+
   return (
     <nav className="nav">
       <div className="container nav-inner">
@@ -71,7 +121,7 @@ function Nav() {
           />
         </FoldLink>
         <div className="nav-links">
-          {navPages.map((p) => (
+          {links.map((p) => (
             <FoldLink key={p.slug} to={p.slug === "home" ? "/" : `/${p.slug}`}>
               {p.navLabel}
             </FoldLink>
