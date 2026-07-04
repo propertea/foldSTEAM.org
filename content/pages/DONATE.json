@@ -1,0 +1,19 @@
+{
+  "title": "DONATE",
+  "navLabel": "DONATE",
+  "navOrder": 4,
+  "blocks": [
+    {
+      "kicker": "Notes & updates",
+      "heading": "The FOLDS blog",
+      "accentWord": "blog",
+      "tagline": "News, folds, and STEAM ideas from the forum.",
+      "_template": "hero"
+    },
+    {
+      "heading": "Latest posts",
+      "folder": "blog",
+      "_template": "list"
+    }
+  ]
+}
