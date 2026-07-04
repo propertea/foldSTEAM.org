@@ -1,22 +1,21 @@
 {
   "title": "Home",
   "navLabel": "Home",
-  "navOrder": 1,
+  "navOrder": 3,
   "blocks": [
     {
-      "_template": "hero",
       "kicker": "One sheet, no cuts",
       "heading": "A site that unfolds",
       "accentWord": "unfolds",
-      "tagline": "Every page you open is a fold. Every section arrives like paper opening. Edit anything you see — the creases take care of themselves."
+      "tagline": "Every page you open is a fold. Every section arrives like paper opening. Edit anything you see — the creases take care of themselves.",
+      "_template": "hero"
     },
     {
-      "_template": "prose",
       "heading": "How this site works",
-      "body": "This whole page is editable. Open the **admin area** and click any page to change its words, add sections, or rearrange them. You never need to touch code, and you can't break the design — the folds, colors and type are locked in place.\n\nPages are built from stackable sections: a hero banner, text like this, card grids, and image-with-text rows. Add as many as you like, in any order.\n"
+      "body": "This whole page is editable. Open the **admin area** and click any page to change its words, add sections, or rearrange them. You never need to touch code, and you can't break the design — the folds, colors and type are locked in place.\n\nPages are built from stackable sections: a hero banner, text like this, card grids, and image-with-text rows. Add as many as you like, in any order.\n",
+      "_template": "prose"
     },
     {
-      "_template": "cards",
       "heading": "What you can add to a page",
       "items": [
         {
@@ -37,7 +36,8 @@
           "linkLabel": "See one on the About page",
           "linkTo": "/about"
         }
-      ]
+      ],
+      "_template": "cards"
     }
   ]
 }
