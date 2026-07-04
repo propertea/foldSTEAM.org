@@ -33,7 +33,17 @@ npm run dev
 
 Local mode needs **no account** — edits write straight to `content/*.json` and hot-reload the site. This is also how you (the developer) will usually work.
 
-## Deploy to GitHub Pages
+## Deploys (production: Cloudflare Pages, debounced)
+
+Production builds run on Cloudflare Pages from `main`, **debounced**: every push (including each editor save) triggers `.github/workflows/debounced-deploy.yml`, which waits until pushes have been quiet for 5 minutes, then fires one Cloudflare build via a deploy hook — a burst of saves becomes a single deploy. One-time setup:
+
+1. Cloudflare Pages project → **Settings → Builds & deployments** → disable automatic deployments for the production branch.
+2. Same page → **Deploy hooks** → create one for `main` and copy its URL.
+3. GitHub repo → **Settings → Secrets and variables → Actions** → add secret `CLOUDFLARE_DEPLOY_HOOK_URL` with that URL.
+
+Run the workflow manually from the Actions tab to deploy immediately without the wait.
+
+## Deploy to GitHub Pages (fallback)
 
 1. Create a GitHub repo and push this project to `main`.
 2. Repo **Settings → Pages → Source → GitHub Actions**.

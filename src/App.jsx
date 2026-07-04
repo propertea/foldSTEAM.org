@@ -156,6 +156,10 @@ function Page({ slug: fixedSlug }) {
     query: PAGE_QUERY,
     variables: { relativePath: `${slug}.json` },
     data: tinaPayload,
+    // The nav's pageConnection query registers a form per page, so tell
+    // the admin which form this page is — otherwise it shows the raw
+    // form list instead of opening this page's editor on navigation.
+    experimental___selectFormByFormId: () => `content/pages/${slug}.json`,
   });
   const page = data?.page;
 

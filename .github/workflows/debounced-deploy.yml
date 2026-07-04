@@ -1,0 +1,45 @@
+name: Debounced Cloudflare deploy
+
+# Editor saves land as individual commits. Instead of one build per push,
+# wait until pushes have been quiet for 5 minutes, then trigger a single
+# Cloudflare Pages build via its deploy hook. Each new push cancels the
+# waiting run and restarts the timer, so a burst of saves = one deploy.
+#
+# Setup (once):
+#   1. Cloudflare Pages project -> Settings -> Builds & deployments ->
+#      disable automatic deployments for the production branch.
+#   2. Same page -> Deploy hooks -> create one for main, copy its URL.
+#   3. GitHub repo -> Settings -> Secrets and variables -> Actions ->
+#      add secret CLOUDFLARE_DEPLOY_HOOK_URL with that URL.
+#
+# Run manually from the Actions tab to deploy immediately (no wait).
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: debounced-cloudflare-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      HOOK: ${{ secrets.CLOUDFLARE_DEPLOY_HOOK_URL }}
+    steps:
+      - name: Check deploy hook is configured
+        if: env.HOOK == ''
+        run: |
+          echo "::error::Secret CLOUDFLARE_DEPLOY_HOOK_URL is not set. Create a deploy hook in the Cloudflare Pages project and add its URL as a repo secret."
+          exit 1
+
+      - name: Wait for pushes to go quiet (5-minute debounce)
+        if: github.event_name == 'push'
+        run: sleep 300
+
+      - name: Trigger Cloudflare Pages build
+        run: |
+          curl -fsS -X POST "$HOOK" > /dev/null
+          echo "Cloudflare deploy hook triggered for $GITHUB_SHA"
