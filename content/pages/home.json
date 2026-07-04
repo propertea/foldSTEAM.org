@@ -38,6 +38,41 @@
         }
       ],
       "_template": "cards"
+    },
+    {
+      "images": [
+        {
+          "src": "/uploads/Jacobs%20Institute%20Open%20House,%20Dec%202023.png"
+        },
+        {
+          "src": "/uploads/Jacobs%20Institute%20Open%20House,%20Dec%202023.png"
+        },
+        {
+          "src": "/uploads/Jacobs%20Institute%20Open%20House,%20Dec%202023.png"
+        },
+        {
+          "src": "/uploads/Jacobs%20Institute%20Open%20House,%20Dec%202023.png"
+        },
+        {
+          "src": "/uploads/Jacobs%20Institute%20Open%20House,%20Dec%202023.png"
+        },
+        {
+          "src": "/uploads/Jacobs%20Institute%20Open%20House,%20Dec%202023.png"
+        },
+        {
+          "src": "/uploads/Jacobs%20Institute%20Open%20House,%20Dec%202023.png"
+        },
+        {
+          "src": "/uploads/Jacobs%20Institute%20Open%20House,%20Dec%202023.png"
+        },
+        {
+          "src": "/uploads/Jacobs%20Institute%20Open%20House,%20Dec%202023.png"
+        },
+        {
+          "src": "/uploads/Jacobs%20Institute%20Open%20House,%20Dec%202023.png"
+        }
+      ],
+      "_template": "gallery"
     }
   ]
 }
