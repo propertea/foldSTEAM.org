@@ -5,38 +5,18 @@
   "blocks": [
     {
       "kicker": "One sheet, no cuts",
-      "heading": "A site that unfolds",
-      "accentWord": "unfolds",
-      "tagline": "Every page you open is a fold. Every section arrives like paper opening. Edit anything you see — the creases take care of themselves.",
+      "heading": "Forum for Origami Learning, Design, and STEAM Engagement",
+      "accentWord": "Origami",
+      "tagline": "The FOLDS non-profit was created to support groups around the world who are using the art of origami to further STEM education.  ",
       "_template": "hero"
     },
     {
-      "heading": "How this site works",
-      "body": "This whole page is editable. Open the **admin area** and click any page to change its words, add sections, or rearrange them. You never need to touch code, and you can't break the design — the folds, colors and type are locked in place.\n\nPages are built from stackable sections: a hero banner, text like this, card grids, and image-with-text rows. Add as many as you like, in any order.\n",
+      "heading": "Our Mission",
+      "body": "# To advance the understanding of origami and folding as bridges across science, technology, engineering, arts, and mathematics. We support education, research, and community engagement that connect classrooms and communities in the U.S. and abroad through origami and STEAM.\n",
       "_template": "prose"
     },
     {
-      "heading": "What you can add to a page",
-      "items": [
-        {
-          "title": "Hero banner",
-          "text": "A big opening statement with an optional red accent word and a supporting line."
-        },
-        {
-          "title": "Text section",
-          "text": "Free-form writing with headings, bold, lists, links and inline images."
-        },
-        {
-          "title": "Card grid",
-          "text": "Rows of folded-corner cards, like these. Good for services, people, or shows."
-        },
-        {
-          "title": "Image + text",
-          "text": "A photo beside a paragraph, with a switch to flip which side the image sits on.",
-          "linkLabel": "See one on the About page",
-          "linkTo": "/about"
-        }
-      ],
+      "heading": "",
       "_template": "cards"
     },
     {
